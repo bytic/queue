@@ -2,6 +2,8 @@
 
 namespace ByTIC\Queue\Connections;
 
+use Nip\Config\Config;
+
 /**
  * Class ConnectionFactory
  * @package ByTIC\Queue\Connections
@@ -23,11 +25,15 @@ class ConnectionFactory
     }
 
     /**
-     * @param $configs
+     * @param Config|array $configs
      * @return mixed
      */
     protected static function createConfiguration($configs)
     {
+        $return = $configs  instanceof Config ? $configs->toArray() : $configs;
+
+        $return['dsn'] = $return['driver'].':';
+
 //        $configProcessor = new ConfigProcessor();
 //        $simpleClientConfig = $configProcessor->process($configs);
 //
@@ -41,6 +47,6 @@ class ConnectionFactory
 //            throw new \LogicException('transport.connection_factory_class option is not supported by simple client');
 //        }
 //        return $simpleClientConfig;
-        return $configs;
+        return $return;
     }
 }

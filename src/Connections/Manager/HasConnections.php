@@ -4,6 +4,7 @@ namespace ByTIC\Queue\Connections\Manager;
 
 use ByTIC\Queue\Connections\Connection;
 use ByTIC\Queue\Connections\ConnectionFactory;
+use Nip\Config\Config;
 
 /**
  * Trait HasConnections
@@ -50,7 +51,7 @@ trait HasConnections
      * Get the queue connection configuration.
      *
      * @param string $name
-     * @return array
+     * @return Config
      */
     protected function getConnectionConfig($name)
     {
