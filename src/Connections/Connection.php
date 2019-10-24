@@ -2,6 +2,7 @@
 
 namespace ByTIC\Queue\Connections;
 
+use ByTIC\Queue\Messages\MessageTransform;
 use Interop\Queue\Context;
 use Interop\Queue\Destination;
 use Interop\Queue\Message;
@@ -32,6 +33,15 @@ class Connection
     public function __construct(Context $context)
     {
         $this->context = $context;
+        $this->build();
+    }
+
+    /**
+     * @param Destination $destination
+     */
+    public function setDestination(Destination $destination): void
+    {
+        $this->destination = $destination;
     }
 
     /**
@@ -44,8 +54,11 @@ class Connection
     public function send(Message $message, Destination $destination = null)
     {
         $destination = $destination ?: $this->destination;
+//        $message = MessageTransform::transform($message, $this->context);
         $this->producer->send($destination, $message);
     }
+
+
 
     protected function build()
     {

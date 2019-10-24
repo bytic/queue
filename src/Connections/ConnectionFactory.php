@@ -20,6 +20,15 @@ class ConnectionFactory
         $factory = (new \Enqueue\ConnectionFactoryFactory())->create($config);
         $context = $factory->createContext();
 
+        return static::fromContext($context);
+    }
+
+    /**
+     * @param $context
+     * @return Connection
+     */
+    public static function fromContext($context)
+    {
         $connection = new Connection($context);
         return $connection;
     }
