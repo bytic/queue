@@ -2,6 +2,7 @@
 
 namespace ByTIC\Queue\Connections;
 
+use Interop\Queue\Context;
 use Nip\Config\Config;
 
 /**
@@ -24,7 +25,7 @@ class ConnectionFactory
     }
 
     /**
-     * @param $context
+     * @param Context $context
      * @return Connection
      */
     public static function fromContext($context)
