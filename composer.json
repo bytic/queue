@@ -17,6 +17,7 @@
   "require": {
     "php": "^7.2",
     "bytic/container": "^0.9",
+    "bytic/console": "^0.9",
     "bytic/config": "^0.9",
     "bytic/utility": "^1.0",
     "enqueue/enqueue": "^0.9",
