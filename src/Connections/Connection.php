@@ -3,6 +3,7 @@
 namespace ByTIC\Queue\Connections;
 
 use ByTIC\Queue\Messages\Message;
+use ByTIC\Queue\Messages\MessageTransform;
 use Interop\Queue\Context;
 use Interop\Queue\Destination;
 use Interop\Queue\Message as InteropMessage;
@@ -54,7 +55,7 @@ class Connection
     public function send(Message $message, Destination $destination = null)
     {
         $destination = $destination ?: $this->destination;
-//        $message = MessageTransform::transform($message, $this->context);
+        $message = MessageTransform::transform($message, $this->context);
         $this->producer->send($destination, $message);
     }
 
