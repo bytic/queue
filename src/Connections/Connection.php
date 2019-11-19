@@ -21,6 +21,13 @@ class Connection
     protected $context;
 
     /**
+     * The name of the default queue.
+     *
+     * @var string
+     */
+    protected $defaultQueue = 'default';
+
+    /**
      * @var null|Producer
      */
     protected $producer = null;
@@ -49,8 +56,9 @@ class Connection
      * @param string $name
      * @return \Interop\Queue\Queue
      */
-    public function createDestinationQueue($name)
+    public function createDestinationQueue($name = null)
     {
+        $name = $name ?: $this->defaultQueue;
         return $this->context->createQueue($name);
     }
 
