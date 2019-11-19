@@ -2,11 +2,9 @@
 
 namespace ByTIC\Queue\Connections;
 
-use ByTIC\Queue\Messages\Message;
-use ByTIC\Queue\Messages\MessageTransform;
+use ByTIC\Queue\Connections\Traits\ConnectionSendTrait;
 use Interop\Queue\Context;
 use Interop\Queue\Destination;
-use Interop\Queue\Message as InteropMessage;
 use Interop\Queue\Producer;
 
 /**
@@ -15,6 +13,8 @@ use Interop\Queue\Producer;
  */
 class Connection
 {
+    use ConnectionSendTrait;
+
     /**
      * @var Context
      */
@@ -43,20 +43,6 @@ class Connection
     public function setDestination(Destination $destination): void
     {
         $this->destination = $destination;
-    }
-
-    /**
-     * @param Message|InteropMessage $message
-     * @param Destination|null $destination
-     * @throws \Interop\Queue\Exception
-     * @throws \Interop\Queue\Exception\InvalidDestinationException
-     * @throws \Interop\Queue\Exception\InvalidMessageException
-     */
-    public function send(Message $message, Destination $destination = null)
-    {
-        $destination = $destination ?: $this->destination;
-        $message = MessageTransform::transform($message, $this->context);
-        $this->producer->send($destination, $message);
     }
 
     /**
