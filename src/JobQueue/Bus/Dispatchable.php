@@ -17,8 +17,10 @@ trait Dispatchable
      */
     public static function dispatch()
     {
-        return new PendingDispatch(
-            new Job(static::class)
-        );
+        $arguments = func_get_args();
+        $job = new Job(static::class);
+        $job->arguments($arguments);
+
+        return new PendingDispatch($job);
     }
 }

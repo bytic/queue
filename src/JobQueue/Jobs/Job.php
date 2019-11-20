@@ -19,6 +19,12 @@ class Job
     protected $callable;
 
     /**
+     * @var array
+     */
+    protected $arguments;
+
+
+    /**
      * Job constructor.
      * @param callable $callable
      */
@@ -28,12 +34,24 @@ class Job
     }
 
     /**
+     * @param $arguments
+     */
+    public function arguments(array $arguments)
+    {
+        $this->arguments = $arguments;
+    }
+
+    /**
      * @return Message
      */
     public function createMessage()
     {
-        $message = new Message();
-        $message->setProperty('callable', serialize($this->callable));
+        $body = [
+            'callable' => serialize($this->callable),
+            'arguments' => serialize($this->arguments)
+        ];
+        $message = new Message(json_encode($body));
+        $message->setDelay($this->delay);
         return $message;
     }
 }

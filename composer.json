@@ -16,6 +16,7 @@
   ],
   "require": {
     "php": "^7.2",
+    "ext-json": "*",
     "bytic/container": "^0.9",
     "bytic/console": "^0.9",
     "bytic/config": "^0.9",
@@ -25,7 +26,6 @@
     "enqueue/fs": "^0.9",
     "queue-interop/queue-interop": "^0.7|^0.8",
     "queue-interop/amqp-interop": "^0.8",
-
     "symfony/config": "^3.4|^4"
   },
   "require-dev": {
