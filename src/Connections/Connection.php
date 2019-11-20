@@ -64,6 +64,30 @@ class Connection
 
     protected function build()
     {
-        $this->producer = $this->context->createProducer();
+        $this->setProducer($this->context->createProducer());
+    }
+
+    /**
+     * @param string $defaultQueue
+     */
+    public function setDefaultQueue(string $defaultQueue): void
+    {
+        $this->defaultQueue = $defaultQueue;
+    }
+
+    /**
+     * @return Producer|null
+     */
+    public function getProducer(): ?Producer
+    {
+        return $this->producer;
+    }
+
+    /**
+     * @param Producer|null $producer
+     */
+    public function setProducer($producer): void
+    {
+        $this->producer = $producer;
     }
 }

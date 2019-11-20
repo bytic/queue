@@ -4,6 +4,7 @@ namespace ByTIC\Queue\Tests\Connections;
 
 use ByTIC\Queue\Connections\Connection;
 use ByTIC\Queue\Connections\ConnectionFactory;
+use ByTIC\Queue\Messages\Message;
 use Enqueue\Null\NullConnectionFactory;
 use ByTIC\Queue\Tests\AbstractTest;
 use Nip\Config\Config;
@@ -22,7 +23,7 @@ class ConnectionTest extends AbstractTest
         $fooTopic = $context->createTopic('aTopic');
 
         $connection = new Connection($context);
-        $connection->send($context->createMessage(), $fooTopic);
+        $connection->send(new Message(), $fooTopic);
         static::addToAssertionCount(1);
     }
 }

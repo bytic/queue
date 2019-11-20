@@ -50,8 +50,8 @@ trait ConnectionSendTrait
      */
     public function send(Message $message, Destination $destination = null)
     {
-        $destination = $destination ?: $this->destination;
+        $destination = $destination ?: $this->destination ?: $this->createDestinationQueue();
         $message = MessageTransform::transform($message, $this->context);
-        $this->producer->send($destination, $message);
+        $this->getProducer()->send($destination, $message);
     }
 }
