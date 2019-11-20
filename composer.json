@@ -22,6 +22,7 @@
     "bytic/utility": "^1.0",
     "enqueue/enqueue": "^0.9",
     "enqueue/sqs": "^0.9",
+    "enqueue/fs": "^0.9",
     "queue-interop/queue-interop": "^0.7|^0.8",
     "queue-interop/amqp-interop": "^0.8",
 
