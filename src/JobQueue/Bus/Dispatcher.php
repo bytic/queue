@@ -48,10 +48,6 @@ class Dispatcher
      */
     protected static function getConnection($connection = null)
     {
-        if (function_exists('app')) {
-            return app('queue')->connection($connection);
-        }
-
-        return Container::getInstance()->get('queue')->connection($connection);
+        return \queue($connection);
     }
 }

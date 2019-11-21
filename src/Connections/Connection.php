@@ -3,8 +3,9 @@
 namespace ByTIC\Queue\Connections;
 
 use ByTIC\Queue\Connections\Traits\ConnectionSendTrait;
+use ByTIC\Queue\Connections\Traits\HasConsumerTrait;
+use ByTIC\Queue\Connections\Traits\HasDestinationsTrait;
 use Interop\Queue\Context;
-use Interop\Queue\Destination;
 use Interop\Queue\Producer;
 
 /**
@@ -14,6 +15,8 @@ use Interop\Queue\Producer;
 class Connection
 {
     use ConnectionSendTrait;
+    use HasDestinationsTrait;
+    use HasConsumerTrait;
 
     /**
      * @var Context
@@ -21,18 +24,9 @@ class Connection
     protected $context;
 
     /**
-     * The name of the default queue.
-     *
-     * @var string
-     */
-    protected $defaultQueue = 'default';
-
-    /**
      * @var null|Producer
      */
     protected $producer = null;
-
-    protected $destination = null;
 
     /**
      * Connection constructor.
@@ -42,24 +36,6 @@ class Connection
     {
         $this->context = $context;
         $this->build();
-    }
-
-    /**
-     * @param Destination $destination
-     */
-    public function setDestination(Destination $destination): void
-    {
-        $this->destination = $destination;
-    }
-
-    /**
-     * @param string $name
-     * @return \Interop\Queue\Queue
-     */
-    public function createDestinationQueue($name = null)
-    {
-        $name = $name ?: $this->defaultQueue;
-        return $this->context->createQueue($name);
     }
 
     protected function build()
@@ -89,5 +65,13 @@ class Connection
     public function setProducer($producer): void
     {
         $this->producer = $producer;
+    }
+
+    /**
+     * @return Context
+     */
+    public function getContext(): Context
+    {
+        return $this->context;
     }
 }

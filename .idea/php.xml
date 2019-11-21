@@ -67,6 +67,8 @@
       <path value="$PROJECT_DIR$/vendor/symfony/process" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
       <path value="$PROJECT_DIR$/vendor/bytic/console" />
+      <path value="$PROJECT_DIR$/vendor/enqueue/fs" />
+      <path value="$PROJECT_DIR$/vendor/makasim/temp-file" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

@@ -2,8 +2,10 @@
 
 namespace ByTIC\Queue\JobQueue\Jobs;
 
+use ByTIC\Queue\JobQueue\Jobs\Traits\FireTrait;
+use ByTIC\Queue\JobQueue\Jobs\Traits\HasArguments;
+use ByTIC\Queue\JobQueue\Jobs\Traits\HasMessageTrait;
 use ByTIC\Queue\JobQueue\Jobs\Traits\Queueable;
-use ByTIC\Queue\Messages\Message;
 
 /**
  * Class Job
@@ -12,17 +14,14 @@ use ByTIC\Queue\Messages\Message;
 class Job
 {
     use Queueable;
+    use HasArguments;
+    use HasMessageTrait;
+    use FireTrait;
 
     /**
      * @var callable
      */
     protected $callable;
-
-    /**
-     * @var array
-     */
-    protected $arguments;
-
 
     /**
      * Job constructor.
@@ -31,27 +30,5 @@ class Job
     public function __construct(callable $callable)
     {
         $this->callable = $callable;
-    }
-
-    /**
-     * @param $arguments
-     */
-    public function arguments(array $arguments)
-    {
-        $this->arguments = $arguments;
-    }
-
-    /**
-     * @return Message
-     */
-    public function createMessage()
-    {
-        $body = [
-            'callable' => serialize($this->callable),
-            'arguments' => serialize($this->arguments)
-        ];
-        $message = new Message(json_encode($body));
-        $message->setDelay($this->delay);
-        return $message;
     }
 }
