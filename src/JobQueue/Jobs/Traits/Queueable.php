@@ -2,6 +2,8 @@
 
 namespace ByTIC\Queue\JobQueue\Jobs\Traits;
 
+use Nip\Utility\Arr;
+
 /**
  * Trait Queueable
  * @package ByTIC\Queue\JobQueue\Bus

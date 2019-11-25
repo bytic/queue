@@ -51,9 +51,9 @@ trait HasConnections
      * Get the queue connection configuration.
      *
      * @param string $name
-     * @return Config
+     * @return Config|array
      */
-    protected function getConnectionConfig($name)
+    protected function getConnectionConfig($name = null)
     {
         if (!is_null($name) && $name !== 'null') {
             return $this->getConfig("connections.{$name}");
@@ -71,5 +71,9 @@ trait HasConnections
         return $this->getConfig('default');
     }
 
+    /**
+     * @param string $name
+     * @return Config|array
+     */
     abstract protected function getConfig($name);
 }
