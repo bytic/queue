@@ -70,4 +70,6 @@ trait HasConnections
     {
         return $this->getConfig('default');
     }
+
+    abstract protected function getConfig($name);
 }

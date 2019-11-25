@@ -1,15 +1,20 @@
 checks:
-    php:
-        code_rating: true
-        duplication: true
+  php:
+    code_rating: true
+    duplication: true
 build:
-    environment:
-        php: '7.2'
+  nodes:
+    analysis:
+      tests:
+        override:
+          - php-scrutinizer-run
+  environment:
+    php: '7.2'
 tools:
-    php_code_coverage:
-        enabled: true
-    php_code_sniffer:
-        config:
-            standard: "PSR2"
-    external_code_coverage:
-        timeout: 600
+  php_code_coverage:
+    enabled: true
+  php_code_sniffer:
+    config:
+      standard: "PSR2"
+  external_code_coverage:
+    timeout: 600

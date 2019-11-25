@@ -17,9 +17,6 @@ trait ConnectionSendTrait
     /**
      * @param Message $message
      * @param $queue
-     * @throws \Interop\Queue\Exception
-     * @throws \Interop\Queue\Exception\InvalidDestinationException
-     * @throws \Interop\Queue\Exception\InvalidMessageException
      */
     public function sendOn(Message $message, $queue)
     {
@@ -31,9 +28,6 @@ trait ConnectionSendTrait
      * @param Message $message
      * @param $queue
      * @param $delay
-     * @throws \Interop\Queue\Exception
-     * @throws \Interop\Queue\Exception\InvalidDestinationException
-     * @throws \Interop\Queue\Exception\InvalidMessageException
      */
     public function laterOn(Message $message, $queue, $delay)
     {
@@ -44,14 +38,32 @@ trait ConnectionSendTrait
     /**
      * @param Message|InteropMessage $message
      * @param Destination|null $destination
-     * @throws \Interop\Queue\Exception
-     * @throws \Interop\Queue\Exception\InvalidDestinationException
-     * @throws \Interop\Queue\Exception\InvalidMessageException
      */
     public function send(Message $message, Destination $destination = null)
     {
-        $destination = $destination ?: $this->destination ?: $this->createDestinationQueue();
+        $destination = $this->sendDetectDestination($destination);
         $message = MessageTransform::transform($message, $this->context);
         $this->getProducer()->send($destination, $message);
     }
+
+    /**
+     * @param Destination|null $destination
+     * @return Destination|mixed
+     */
+    protected function sendDetectDestination(Destination $destination = null)
+    {
+        if ($destination instanceof Destination) {
+            return $destination;
+        }
+        if (isset($this->destination) && $this->destination instanceof Destination) {
+            return $this->destination;
+        }
+        return $this->createDestinationQueue();
+    }
+
+    /**
+     * @param null $name
+     * @return mixed
+     */
+    abstract public function createDestinationQueue($name = null);
 }
