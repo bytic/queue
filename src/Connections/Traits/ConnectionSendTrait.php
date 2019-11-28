@@ -42,7 +42,7 @@ trait ConnectionSendTrait
     public function send(Message $message, Destination $destination = null)
     {
         $destination = $this->sendDetectDestination($destination);
-        $message = MessageTransform::transform($message, $this->context);
+        $message = MessageTransform::transform($message, $this->context, $destination);
         $this->getProducer()->send($destination, $message);
     }
 

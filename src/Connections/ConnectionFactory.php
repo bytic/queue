@@ -21,22 +21,26 @@ class ConnectionFactory
         $factory = (new \Enqueue\ConnectionFactoryFactory())->create($config);
         $context = $factory->createContext();
 
-        return static::fromContext($context);
+        return static::fromContext($context, $config);
     }
 
     /**
      * @param Context $context
+     * @param array $config
      * @return Connection
      */
-    public static function fromContext($context)
+    public static function fromContext($context, $config)
     {
         $connection = new Connection($context);
+        if (isset($config['queue'])) {
+            $connection->setDefaultQueue($config['queue']);
+        }
         return $connection;
     }
 
     /**
      * @param Config|array $configs
-     * @return mixed
+     * @return array
      */
     protected static function createConfiguration($configs)
     {

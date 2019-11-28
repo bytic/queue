@@ -2,8 +2,12 @@
 
 namespace ByTIC\Queue\Messages;
 
+use Enqueue\Sqs\SqsDestination;
+use Enqueue\Sqs\SqsMessage;
 use Interop\Queue\Context;
+use Interop\Queue\Destination;
 use Interop\Queue\Message as InteropMessage;
+use Nip\Utility\Str;
 
 /**
  * Class MessageTransform
@@ -22,6 +26,11 @@ class MessageTransform
     protected $context;
 
     /**
+     * @var Context
+     */
+    protected $destination;
+
+    /**
      * @var InteropMessage
      */
     protected $contextMessage;
@@ -31,10 +40,11 @@ class MessageTransform
      * @param Message|InteropMessage $message
      * @param Context $context
      */
-    public function __construct(Message $message, Context $context)
+    public function __construct(Message $message, Context $context, Destination $destination = null)
     {
         $this->message = $message;
         $this->context = $context;
+        $this->destination = $destination;
         $this->contextMessage = $context->createMessage();
         $this->doTransformation();
     }
@@ -42,11 +52,12 @@ class MessageTransform
     /**
      * @param Message|InteropMessage $message
      * @param Context $context
+     * @param Destination $destination
      * @return InteropMessage
      */
-    public static function transform($message, $context)
+    public static function transform($message, $context, $destination = null)
     {
-        $transformer = new static($message, $context);
+        $transformer = new static($message, $context, $destination);
         return $transformer->getContextMessage();
     }
 
@@ -63,6 +74,7 @@ class MessageTransform
         $this->transformBody();
         $this->transformProperties();
         $this->transformHeaders();
+        $this->transformSpecialData();
     }
 
     protected function transformBody()
@@ -78,5 +90,20 @@ class MessageTransform
     protected function transformHeaders()
     {
         $this->contextMessage->setHeaders($this->message->getHeaders());
+    }
+
+    protected function transformSpecialData()
+    {
+        if ($this->contextMessage instanceof SqsMessage) {
+            $this->transformSpecialDataSqs();
+            return;
+        }
+    }
+    protected function transformSpecialDataSqs()
+    {
+        if (Str::endsWith( $this->destination->getQueueName(), '.fifo')) {
+            $this->contextMessage->setMessageGroupId($this->message->getProperty('MessageGroupId', uniqid()));
+            $this->contextMessage->setMessageDeduplicationId($this->message->getProperty('MessageDeduplicationId', uniqid()));
+        }
     }
 }
