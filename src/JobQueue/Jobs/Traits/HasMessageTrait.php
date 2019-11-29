@@ -49,7 +49,19 @@ trait HasMessageTrait
     {
         return json_encode([
             'callable' => serialize($this->callable),
-            'arguments' => serialize($this->arguments)
+            'arguments' => $this->createPayloadArguments()
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    protected function createPayloadArguments()
+    {
+        $arguments = [];
+        foreach ($this->arguments as $key => $argument) {
+            $arguments[$key] = $argument;
+        }
+        return serialize($arguments);
     }
 }

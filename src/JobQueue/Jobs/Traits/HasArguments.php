@@ -14,6 +14,20 @@ trait HasArguments
     protected $arguments;
 
     /**
+     * @param $value
+     * @param null $key
+     */
+    public function argument($value, $key = null)
+    {
+        if ($key === null) {
+            $this->arguments[] = $value;
+            return;
+        }
+        $this->arguments[$key] = $value;
+        return;
+    }
+
+    /**
      * @param $arguments
      */
     public function arguments(array $arguments)
