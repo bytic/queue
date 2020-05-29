@@ -77,7 +77,7 @@ class ConsumeCommand extends Command
         array_unshift($extensions, $exitStatusExtension);
 
         $consumer->consume(new ChainExtension($extensions));
-        return $exitStatusExtension->getExitStatus();
+        return (int) $exitStatusExtension->getExitStatus();
     }
 
     /**

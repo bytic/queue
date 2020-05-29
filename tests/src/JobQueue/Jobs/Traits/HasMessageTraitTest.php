@@ -18,7 +18,7 @@ class HasMessageTraitTest extends AbstractTest
     {
         $job = new Job([SimpleCommand::class, 'handle']);
         $books = Books::instance();
-        $books->setDB(new Connection());
+        $books->setDB(new Connection(false));
 
         $book = $books->getNew();
         $job->argument($book);
