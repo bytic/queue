@@ -3,7 +3,7 @@
 namespace ByTIC\Queue;
 
 use ByTIC\Queue\Console\ConsumeCommand;
-use Nip\Container\ServiceProvider\AbstractSignatureServiceProvider;
+use \Nip\Container\ServiceProviders\Providers\AbstractSignatureServiceProvider;
 
 /**
  * Class QueueServiceProvider
@@ -27,7 +27,7 @@ class QueueServiceProvider extends AbstractSignatureServiceProvider
      */
     protected function registerManager()
     {
-        $this->getContainer()->singleton('queue', function () {
+        $this->getContainer()->share('queue', function () {
             $manager = new Connections\Manager();
             $manager->setContainer($this->getContainer());
             return $manager;
@@ -41,7 +41,7 @@ class QueueServiceProvider extends AbstractSignatureServiceProvider
      */
     protected function registerConnection()
     {
-        $this->getContainer()->singleton('queue.connection', function () {
+        $this->getContainer()->share('queue.connection', function () {
             return $this->getContainer()->get('queue')->connection();
         });
     }

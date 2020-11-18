@@ -17,9 +17,6 @@
   "require": {
     "php": "^7.2",
     "ext-json": "*",
-    "bytic/container": "^0.9|^1.0",
-    "bytic/console": "^0.9|^1.0",
-    "bytic/config": "^0.9|^1.0",
     "bytic/utility": "^1.0",
     "enqueue/enqueue": "^0.9",
     "enqueue/sqs": "^0.9",
@@ -32,6 +29,9 @@
     "phpunit/phpunit": "^7.2|^8.0|^9.0",
     "mockery/mockery": "^1.1",
     "enqueue/null": "^0.9",
+    "bytic/container": "^0.9|^1.0|^2.0",
+    "bytic/console": "^0.9|^1.0",
+    "bytic/config": "^0.9|^1.0",
     "bytic/orm": "^0.9|^1.0"
   },
   "provide": {
