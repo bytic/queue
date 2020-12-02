@@ -15,6 +15,5 @@ class Serializer
      */
     public static function serialize($content)
     {
-
     }
 }

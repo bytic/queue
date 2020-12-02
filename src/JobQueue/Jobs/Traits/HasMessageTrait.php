@@ -37,7 +37,8 @@ trait HasMessageTrait
         $message = new Message($this->createPayload());
         $message->setDelay($this->delay);
         $message->setProperty(
-            Config::PROCESSOR, Worker::class
+            Config::PROCESSOR,
+            Worker::class
         );
         return $message;
     }

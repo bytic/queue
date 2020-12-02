@@ -13,7 +13,6 @@ use Interop\Queue\Message as InteropMessage;
  */
 trait ConnectionSendTrait
 {
-
     /**
      * @param Message $message
      * @param $queue

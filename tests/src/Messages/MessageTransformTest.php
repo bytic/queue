@@ -23,7 +23,7 @@ class MessageTransformTest extends AbstractTest
         $messageInterop = MessageTransform::transform($message, $context, $destination);
 
         self::assertInstanceOf(\Interop\Queue\Message::class, $messageInterop);
-        
+
         self::assertGreaterThan(5, strlen($messageInterop->getMessageDeduplicationId()));
         self::assertGreaterThan(5, strlen($messageInterop->getMessageGroupId()));
     }

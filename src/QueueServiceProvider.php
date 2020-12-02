@@ -3,7 +3,7 @@
 namespace ByTIC\Queue;
 
 use ByTIC\Queue\Console\ConsumeCommand;
-use \Nip\Container\ServiceProviders\Providers\AbstractSignatureServiceProvider;
+use Nip\Container\ServiceProviders\Providers\AbstractSignatureServiceProvider;
 
 /**
  * Class QueueServiceProvider

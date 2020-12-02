@@ -8,7 +8,6 @@ namespace ByTIC\Queue\Connections\Manager;
  */
 trait HasConfig
 {
-
     /**
      * Get the queue configuration.
      *
@@ -23,5 +22,4 @@ trait HasConfig
         $name = 'queue' . $name;
         return config($name);
     }
-
 }
