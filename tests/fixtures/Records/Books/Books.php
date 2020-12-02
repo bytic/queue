@@ -28,4 +28,12 @@ class Books extends RecordManager
     {
         return 'ByTIC\Queue\Tests\Fixtures';
     }
+
+    /**
+     * @return string
+     */
+    public function getModel(): string
+    {
+        return Book::class;
+    }
 }

@@ -2,6 +2,7 @@ checks:
   php:
     code_rating: true
     duplication: true
+
 build:
   nodes:
     analysis:
@@ -10,11 +11,12 @@ build:
           - php-scrutinizer-run
   environment:
     php: '7.2'
+
 tools:
   php_code_coverage:
     enabled: true
   php_code_sniffer:
     config:
-      standard: "PSR2"
+      standard: "PSR12"
   external_code_coverage:
     timeout: 600
