@@ -10,7 +10,6 @@ use Nip\Utility\Arr;
  */
 trait Queueable
 {
-
     /**
      * The name of the connection the job should be sent to.
      *

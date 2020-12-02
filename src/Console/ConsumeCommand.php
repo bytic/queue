@@ -43,12 +43,20 @@ class ConsumeCommand extends Command
             ->setDescription('A client\'s worker that processes messages. ' .
                 'By default it connects to default queue. ' .
                 'It select an appropriate message processor based on a message headers')
-            ->addArgument('queue-names', InputArgument::IS_ARRAY | InputArgument::REQUIRED,
-                'Queues to consume messages from')
+            ->addArgument(
+                'queue-names',
+                InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+                'Queues to consume messages from'
+            )
 //            ->addOption('skip', null, InputOption::VALUE_IS_ARRAY |
 
-            ->addOption('connection', 'c', InputOption::VALUE_OPTIONAL, 'The connection to consume messages from.',
-                null);
+            ->addOption(
+                'connection',
+                'c',
+                InputOption::VALUE_OPTIONAL,
+                'The connection to consume messages from.',
+                null
+            );
     }
 
     /**

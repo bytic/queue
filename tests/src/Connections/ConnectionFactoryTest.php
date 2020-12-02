@@ -13,7 +13,6 @@ use Nip\Config\Config;
  */
 class ConnectionFactoryTest extends AbstractTest
 {
-
     public function testBuild()
     {
         $configArray = require PROJECT_BASE_PATH . '/config/queue.php';

@@ -46,7 +46,7 @@ class ConnectionFactory
     {
         $return = $configs  instanceof Config ? $configs->toArray() : $configs;
 
-        $return['dsn'] = $return['driver'].':';
+        $return['dsn'] = $return['driver'] . ':';
 
 //        $configProcessor = new ConfigProcessor();
 //        $simpleClientConfig = $configProcessor->process($configs);

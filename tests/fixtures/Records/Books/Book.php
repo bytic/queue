@@ -10,5 +10,4 @@ use Nip\Records\Record;
  */
 class Book extends Record
 {
-
 }

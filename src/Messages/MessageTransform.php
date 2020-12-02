@@ -101,7 +101,7 @@ class MessageTransform
     }
     protected function transformSpecialDataSqs()
     {
-        if (Str::endsWith( $this->destination->getQueueName(), '.fifo')) {
+        if (Str::endsWith($this->destination->getQueueName(), '.fifo')) {
             $this->contextMessage->setMessageGroupId($this->message->getProperty('MessageGroupId', uniqid()));
             $this->contextMessage->setMessageDeduplicationId($this->message->getProperty('MessageDeduplicationId', uniqid()));
         }
