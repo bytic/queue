@@ -4,11 +4,10 @@ namespace ByTIC\Queue\JobQueue\Bus;
 
 use ByTIC\Queue\Connections\Connection;
 use ByTIC\Queue\JobQueue\Jobs\Job;
+use Interop\Queue\Destination;
 use Interop\Queue\Exception;
 use Interop\Queue\Exception\InvalidDestinationException;
 use Interop\Queue\Exception\InvalidMessageException;
-use Interop\Queue\Queue;
-use Nip\Container\Container;
 
 /**
  * Class Dispatcher
@@ -18,11 +17,8 @@ class Dispatcher
 {
     /**
      * @param Job $job
-     * @throws Exception
-     * @throws InvalidDestinationException
-     * @throws InvalidMessageException
      */
-    public static function dispatch($job)
+    public static function dispatch(Job $job)
     {
         $connection = static::getConnection($job->connection);
         $destination = static::determineDestination($connection, $job);
@@ -32,12 +28,12 @@ class Dispatcher
     /**
      * @param Connection $connection
      * @param Job $job
-     * @return null|Queue
+     * @return null|Destination
      */
-    protected static function determineDestination($connection, $job)
+    protected static function determineDestination(Connection $connection, Job $job): ?Destination
     {
-        if ($job->queue) {
-            return $connection->createDestinationQueue($job->queue);
+        if ($job->hasDestination()) {
+            return $connection->createDestination($job->getDestinationName(), $job->getDestinationType());
         }
         return null;
     }
@@ -46,7 +42,7 @@ class Dispatcher
      * @param null|string $connection
      * @return Connection
      */
-    protected static function getConnection($connection = null)
+    protected static function getConnection($connection = null): Connection
     {
         return \queue($connection);
     }

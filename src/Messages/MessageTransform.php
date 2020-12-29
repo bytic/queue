@@ -2,7 +2,6 @@
 
 namespace ByTIC\Queue\Messages;
 
-use Enqueue\Sqs\SqsDestination;
 use Enqueue\Sqs\SqsMessage;
 use Interop\Queue\Context;
 use Interop\Queue\Destination;
@@ -26,7 +25,7 @@ class MessageTransform
     protected $context;
 
     /**
-     * @var Context
+     * @var Destination
      */
     protected $destination;
 
@@ -39,6 +38,7 @@ class MessageTransform
      * MessageTransform constructor.
      * @param Message|InteropMessage $message
      * @param Context $context
+     * @param Destination|null $destination
      */
     public function __construct(Message $message, Context $context, Destination $destination = null)
     {
@@ -55,7 +55,7 @@ class MessageTransform
      * @param Destination $destination
      * @return InteropMessage
      */
-    public static function transform($message, $context, $destination = null)
+    public static function transform($message, $context, $destination = null): InteropMessage
     {
         $transformer = new static($message, $context, $destination);
         return $transformer->getContextMessage();

@@ -22,7 +22,7 @@ trait HasMessageTrait
     {
         $payload = json_decode($message->getBody(), true);
 
-        $callable = unserialize($payload['callable']);
+        $callable = unserialize($payload['command']);
         $job = new static($callable);
 
         $job->arguments(unserialize($payload['arguments']));
@@ -32,7 +32,7 @@ trait HasMessageTrait
     /**
      * @return Message
      */
-    public function createMessage()
+    public function createMessage(): Message
     {
         $message = new Message($this->createPayload());
         $message->setDelay($this->delay);
@@ -49,7 +49,7 @@ trait HasMessageTrait
     public function createPayload()
     {
         return json_encode([
-            'callable' => serialize($this->callable),
+            'command' => serialize($this->command),
             'arguments' => $this->createPayloadArguments()
         ]);
     }
@@ -57,7 +57,7 @@ trait HasMessageTrait
     /**
      * @return string
      */
-    protected function createPayloadArguments()
+    protected function createPayloadArguments(): string
     {
         $arguments = [];
         foreach ($this->arguments as $key => $argument) {

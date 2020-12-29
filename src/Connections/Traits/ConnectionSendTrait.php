@@ -15,23 +15,23 @@ trait ConnectionSendTrait
 {
     /**
      * @param Message $message
-     * @param $queue
+     * @param $destination
      */
-    public function sendOn(Message $message, $queue)
+    public function sendOn(Message $message, $destination)
     {
-        $destination = $this->createDestinationQueue($queue);
+        $destination = $this->createDestinationQueue($destination);
         $this->send($message, $destination);
     }
 
     /**
      * @param Message $message
-     * @param $queue
+     * @param $destination
      * @param $delay
      */
-    public function laterOn(Message $message, $queue, $delay)
+    public function laterOn(Message $message, $destination, $delay)
     {
         $message->setDelay($delay);
-        $this->sendOn($message, $queue);
+        $this->sendOn($message, $destination);
     }
 
     /**
@@ -49,7 +49,7 @@ trait ConnectionSendTrait
      * @param Destination|null $destination
      * @return Destination|mixed
      */
-    protected function sendDetectDestination(Destination $destination = null)
+    protected function sendDetectDestination(Destination $destination = null): Destination
     {
         if ($destination instanceof Destination) {
             return $destination;

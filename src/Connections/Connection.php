@@ -48,7 +48,7 @@ class Connection
      */
     public function setDefaultQueue(string $defaultQueue): void
     {
-        $this->defaultQueue = $defaultQueue;
+        $this->defaultDestinationName = $defaultQueue;
     }
 
     /**

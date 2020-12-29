@@ -10,6 +10,6 @@ trait FireTrait
 {
     public function fire(): void
     {
-        call_user_func_array($this->callable, $this->getArguments());
+        $this->resolveCommand()($this->getArguments());
     }
 }

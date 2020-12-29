@@ -44,9 +44,9 @@ class ConnectionFactory
      */
     protected static function createConfiguration($configs)
     {
-        $return = $configs  instanceof Config ? $configs->toArray() : $configs;
+        $return = $configs instanceof Config ? $configs->toArray() : $configs;
 
-        $return['dsn'] = $return['driver'] . ':';
+        $return['dsn'] = $return['driver'] . ':?' . http_build_query($return);
 
 //        $configProcessor = new ConfigProcessor();
 //        $simpleClientConfig = $configProcessor->process($configs);

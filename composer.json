@@ -15,13 +15,14 @@
     }
   ],
   "require": {
-    "php": "^7.2",
+    "php": "^7.2|^8.0",
     "ext-json": "*",
     "bytic/utility": "^1.0",
     "enqueue/enqueue": "^0.9|^0.10",
     "enqueue/sqs": "^0.9|^0.10",
+    "enqueue/snsqs": "^0.9|^0.10",
     "enqueue/fs": "^0.9|^0.10",
-    "queue-interop/queue-interop": "^0.8.0",
+    "queue-interop/queue-interop": "^0.8",
     "queue-interop/amqp-interop": "^0.8",
     "symfony/config": "^3.4|^4.0|^5.0"
   },
