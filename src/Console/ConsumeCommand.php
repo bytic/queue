@@ -4,9 +4,9 @@ namespace ByTIC\Queue\Console;
 
 use ByTIC\Console\Command;
 use ByTIC\Queue\Connections\Connection;
+use ByTIC\Queue\Consumption\DelegatePreProcessor;
 use ByTIC\Queue\JobQueue\Worker;
 use Enqueue\ArrayProcessorRegistry;
-use Enqueue\Client\DelegateProcessor;
 use Enqueue\Consumption\ChainExtension;
 use Enqueue\Consumption\Extension\ExitStatusExtension;
 use Enqueue\Consumption\QueueConsumer;
@@ -111,12 +111,12 @@ class ConsumeCommand extends Command
     }
 
     /**
-     * @return DelegateProcessor
+     * @return DelegatePreProcessor
      */
-    protected function getProcessor()
+    protected function getProcessor(): DelegatePreProcessor
     {
         $processorRegistry = new ArrayProcessorRegistry([]);
-        $processor = new DelegateProcessor($processorRegistry);
+        $processor = new DelegatePreProcessor($processorRegistry);
 
         $worker = new Worker();
         $processorRegistry->add(Worker::class, $worker);
@@ -128,7 +128,7 @@ class ConsumeCommand extends Command
      * @param Connection $connection
      * @return QueueConsumer
      */
-    protected function getQueueConsumer($connection)
+    protected function getQueueConsumer($connection): QueueConsumer
     {
         return new QueueConsumer($connection->getContext());
     }
