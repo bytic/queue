@@ -64,7 +64,7 @@ class ConsumeCommand extends Command
      * @noinspection PhpMissingParentCallCommonInspection
      * @throws Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $connection = $this->getConnection($input);
 
@@ -85,7 +85,7 @@ class ConsumeCommand extends Command
         array_unshift($extensions, $exitStatusExtension);
 
         $consumer->consume(new ChainExtension($extensions));
-        return (int) $exitStatusExtension->getExitStatus();
+        return (int)$exitStatusExtension->getExitStatus();
     }
 
     /**
