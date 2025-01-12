@@ -9,6 +9,7 @@ use ByTIC\Queue\JobQueue\Worker;
 use Enqueue\ArrayProcessorRegistry;
 use Enqueue\Consumption\ChainExtension;
 use Enqueue\Consumption\Extension\ExitStatusExtension;
+use Enqueue\Consumption\ExtensionInterface;
 use Enqueue\Consumption\QueueConsumer;
 use Enqueue\Symfony\Consumption\ChooseLoggerCommandTrait;
 use Enqueue\Symfony\Consumption\LimitsExtensionsCommandTrait;
@@ -79,13 +80,12 @@ class ConsumeCommand extends Command
             $consumer->bind($queue, $processor);
         }
 
-        $extensions = $this->getLimitsExtensions($input, $output);
-
+        $runtimeExtensionChain = $this->getRuntimeExtensions($input, $output);
         $exitStatusExtension = new ExitStatusExtension();
-        array_unshift($extensions, $exitStatusExtension);
 
-        $consumer->consume(new ChainExtension($extensions));
-        return (int)$exitStatusExtension->getExitStatus();
+        $consumer->consume(new ChainExtension([$runtimeExtensionChain, $exitStatusExtension]));
+
+        return $exitStatusExtension->getExitStatus() ?? 0;
     }
 
     /**
@@ -131,5 +131,20 @@ class ConsumeCommand extends Command
     protected function getQueueConsumer($connection): QueueConsumer
     {
         return new QueueConsumer($connection->getContext());
+    }
+
+
+    protected function getRuntimeExtensions(InputInterface $input, OutputInterface $output): ExtensionInterface
+    {
+        $extensions = [];
+
+        $extensions = array_merge($extensions, $this->getLimitsExtensions($input, $output));
+
+        $loggerExtension = $this->getLoggerExtension($input, $output);
+        if ($loggerExtension) {
+            array_unshift($extensions, $loggerExtension);
+        }
+
+        return new ChainExtension($extensions);
     }
 }
